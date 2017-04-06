@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jsonper</title>
+	<style type="text/css">
+		#div1{
+			width: 450px;
+			height: 300px;
+			margin: 50px auto;
+			padding: 10px;
+			overflow: hidden;
+			box-shadow: 0 0 8px #ccc;
+		}
+		#div1 p{
+			font-size: 14px;
+			text-indent: 2em;
+			height: auto;
+		}
+		.share{
+			position: absolute;
+			display: none;
+			cursor: pointer;
+			top: 0;
+			left: 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="div1">
+	<p>
+		在线教育通过互联网这种方式，可以提高教育的便捷性，降低“教与学”需求匹配的成本。互联网+教育提高资源分配效率。通过在线教育可以学习众多课程比如说服务人员可以学习礼仪管理，母亲可以学习育婴经验，白领可以学习制作PPT，管理人员可以学习管理知识，还可以在线学习健身。
+	</p>
+	</div>
+	<script type="text/javascript">
+		var body;
+		var txt="";
+		var title=document.title;
+		appendImg();
+		getTxt();
+		var oSina=document.querySelector('#img_sina');
+		var oQQ=document.querySelector('#img_qq');
+		body.onmouseup=function(e){
+			e=e||window.event;
+			text=getTxt();
+			var left=e.pageX-40;
+			var top=e.pageY-40;
+			if(text&&text.length>0){
+				showImg(true,oSina,(top+50),left);
+				showImg(true,oQQ,(top+50),(left+40));
+			}else{
+				showImg(false);
+			}
+		}
+
+		function showImg(bool,obj,top,left){
+			if(bool){
+				obj.style.left=left+"px";
+				obj.style.top=top+"px";
+				obj.style.display="inline";
+			}else{
+				var shares=document.querySelectorAll(".share");
+				for(var i=0;i<shares.length;i++){
+					shares[i].style.display='none';
+				}
+			}
+		}
+		oSina.onclick=function(){
+			window.open('http://service.weibo.com/share/share.php?title='+txt+'__分享自'+title+'&url='+window.location.href);
+		}
+
+
+		function getTxt(){
+			if(document.selection){
+				txt=document.selection.createRange().text;
+			}else{
+				txt=document.getSelection();
+			}
+			return txt.toString();
+		}
+
+
+		function appendImg(){
+			body=document.documentElement || document.body;//JS兼容性 获取Body;
+			var aImg="<img id='img_sina' class='share' src='sina.png' title='分享到新浪微博'>"+"\n"+"<img id='img_qq' class='share' src='qq.png' title='分享到QQ微博'>";
+			body.innerHTML+=aImg;
+		}
+	</script>
+</body>
+</html>
